@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="391.0" prefWidth="230.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FirstSceneController">
+   <children>
+      <Button fx:id="chooseFileButton" layoutX="65.0" layoutY="33.0" mnemonicParsing="false" onAction="#chooseFileButtonPressed" text="Choose a file" />
+      <TextField fx:id="tf" layoutX="65.0" layoutY="89.0" onAction="#textButtonPressed" prefHeight="27.0" prefWidth="98.0" />
+      <Button fx:id="enterTextButton" layoutX="65.0" layoutY="129.0" mnemonicParsing="false" onAction="#textButtonPressed" prefHeight="27.0" prefWidth="98.0" text="Enter Text" />
+      <Separator layoutX="65.0" layoutY="70.0" prefHeight="9.0" prefWidth="98.0" />
+      <TextArea fx:id="ta" layoutX="14.0" layoutY="170.0" prefHeight="200.0" prefWidth="200.0" promptText="Entered Text" />
+   </children>
+</AnchorPane>
