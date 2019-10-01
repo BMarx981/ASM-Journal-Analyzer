@@ -29,7 +29,7 @@ public class Analyzer {
 			 
 			while((line = buffer.readLine()) != null) {
 
-				if (line.equals("") ) continue;
+				if (line.equals("")) continue;
 				
 				if (line.substring(0, 2).equals("ER")) {
 					tempList.add(map);
