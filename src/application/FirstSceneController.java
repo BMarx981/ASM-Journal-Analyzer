@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -55,7 +56,7 @@ public class FirstSceneController implements Initializable {
 	
 	public void chooseFileButtonPressed(ActionEvent ev) {
 		FileChooser fc = new FileChooser();
-		fc.setTitle("Select the CHM text file");
+		fc.setTitle("Select the text file");
 		File f = fc.showOpenDialog((Stage) chooseFileButton.getScene().getWindow());
 		if (f != null) {
 			fileName = f.getAbsolutePath();

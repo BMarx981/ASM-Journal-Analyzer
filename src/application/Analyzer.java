@@ -10,6 +10,7 @@ public class Analyzer {
 	ArrayList<Paper> papers = new ArrayList<Paper>();
 	ArrayList<String> codes;
 	HashMap<String, Integer> idCounts = new HashMap<String, Integer>();
+	String fileName = "";
 	
 	Analyzer(ArrayList<String> codes) {
 		this.codes = codes;
@@ -40,25 +41,25 @@ public class Analyzer {
 					paper = new Paper();
 					continue;
 				}
+				if (line.substring(0, 2).equals("JI")) {
+					if(line.substring(0, 2).contains("JI")) {
+						fileName = line.substring(2);
+					}
+						
+				}
 				//each code in the array codes gets sent to process codes
 				//where the code, paper and the line are placed in the Hashmap
 				for(String s : codes) {
 					processCodes(line, s, paper);
 				}
 			}
-			//Each paper gets printed to terminal
-			for (Paper h : papers) {
-				System.out.println(h.map);
-			}
 			processAllIds();
-			System.out.println();
-			System.out.println(idCounts);
 			buffer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		Excel excel = new Excel();
-		excel.createDocument(papers, codes, idCounts);
+		excel.createDocument(papers, codes, idCounts, fileName);
 	}
 	
 	private void processCodes(String line, String code, Paper paper) {
