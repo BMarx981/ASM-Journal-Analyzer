@@ -30,8 +30,8 @@ public class FirstSceneController implements Initializable {
 	Button enterTextButton = new Button();
 	@FXML
 	TextArea ta = new TextArea();
-
-	Analyzer analyzer = new Analyzer(new ArrayList<String>() {
+	
+	ArrayList<String> codes = new ArrayList<String>() {
 		private static final long serialVersionUID = -2337034290157561970L;
 		{
 			add("TI");
@@ -44,7 +44,9 @@ public class FirstSceneController implements Initializable {
 			add("OA");
 			add("ID");
 		}
-	});
+	};
+
+	Analyzer analyzer = new Analyzer(codes);
 	HashSet<String> set = new HashSet<String>();
 	ArrayList<String> enteredCodes = new ArrayList<String>();
 
@@ -65,6 +67,7 @@ public class FirstSceneController implements Initializable {
 		List<File> files = fc.showOpenMultipleDialog((Stage) chooseFileButton.getScene().getWindow());
 		if (files.size() == 0 || files != null) {
 			for (File f : files) {
+				analyzer = new Analyzer(codes);
 				fileName = f.getAbsolutePath();
 				if (enteredCodes.size() == 0) {
 					analyzer.processFile(fileName);

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Analyzer {
+	public static int fileCount = 1;
 	ArrayList<Paper> papers = new ArrayList<Paper>();
 	ArrayList<String> codes;
 	HashMap<String, Integer> idCounts = new HashMap<String, Integer>();
@@ -43,7 +44,7 @@ public class Analyzer {
 				}
 				if (line.substring(0, 2).equals("JI")) {
 					if(line.substring(0, 2).contains("JI")) {
-						fileName = line.substring(2);
+						fileName = line.substring(2) + fileCount;
 					}
 						
 				}
@@ -55,6 +56,7 @@ public class Analyzer {
 			}
 			processAllIds();
 			buffer.close();
+			fileCount++;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
