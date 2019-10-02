@@ -20,12 +20,17 @@ import javafx.stage.Stage;
 
 public class FirstSceneController implements Initializable {
 
-	@FXML AnchorPane anchor = new AnchorPane();
-	@FXML Button chooseFileButton = new Button();
-	@FXML TextField tf = new TextField();
-	@FXML Button enterTextButton = new Button();
-	@FXML TextArea ta = new TextArea();
-	
+	@FXML
+	AnchorPane anchor = new AnchorPane();
+	@FXML
+	Button chooseFileButton = new Button();
+	@FXML
+	TextField tf = new TextField();
+	@FXML
+	Button enterTextButton = new Button();
+	@FXML
+	TextArea ta = new TextArea();
+
 	Analyzer analyzer = new Analyzer(new ArrayList<String>() {
 		private static final long serialVersionUID = -2337034290157561970L;
 		{
@@ -42,32 +47,34 @@ public class FirstSceneController implements Initializable {
 	});
 	HashSet<String> set = new HashSet<String>();
 	ArrayList<String> enteredCodes = new ArrayList<String>();
-	
+
 	String fileName = "";
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		anchor.setOnKeyPressed(keyEvent -> {
-			if(keyEvent.getCode() == KeyCode.ENTER) {
-	        	textButtonPressed(new ActionEvent());
-	        }
+			if (keyEvent.getCode() == KeyCode.ENTER) {
+				textButtonPressed(new ActionEvent());
+			}
 		});
 	}
-	
+
 	public void chooseFileButtonPressed(ActionEvent ev) {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Select the text file");
-		File f = fc.showOpenDialog((Stage) chooseFileButton.getScene().getWindow());
-		if (f != null) {
-			fileName = f.getAbsolutePath();
-			if (enteredCodes.size() == 0) {
-				analyzer.processFile(fileName);
-			} else {
-				analyzer.processFile(fileName, enteredCodes);
+		List<File> files = fc.showOpenMultipleDialog((Stage) chooseFileButton.getScene().getWindow());
+		if (files.size() == 0 || files != null) {
+			for (File f : files) {
+				fileName = f.getAbsolutePath();
+				if (enteredCodes.size() == 0) {
+					analyzer.processFile(fileName);
+				} else {
+					analyzer.processFile(fileName, enteredCodes);
+				}
 			}
 		}
 	}
-	
+
 	public void textButtonPressed(ActionEvent ev) {
 		set.add(tf.getText().toUpperCase());
 		enteredCodes.clear();
@@ -75,7 +82,7 @@ public class FirstSceneController implements Initializable {
 		tf.clear();
 		ta.setText(printCodes());
 	}
-	
+
 	private String printCodes() {
 		String s = "";
 		for (String st : enteredCodes) {
