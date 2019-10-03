@@ -30,7 +30,7 @@ public class FirstSceneController implements Initializable {
 	Button enterTextButton = new Button();
 	@FXML
 	TextArea ta = new TextArea();
-	
+
 	ArrayList<String> codes = new ArrayList<String>() {
 		private static final long serialVersionUID = -2337034290157561970L;
 		{
@@ -80,7 +80,6 @@ public class FirstSceneController implements Initializable {
 		} catch (NullPointerException n) {
 			ta.setText(" No files selected");
 		}
-		
 	}
 
 	public void textButtonPressed(ActionEvent ev) {
