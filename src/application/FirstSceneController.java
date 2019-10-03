@@ -64,18 +64,23 @@ public class FirstSceneController implements Initializable {
 	public void chooseFileButtonPressed(ActionEvent ev) {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Select the text file");
-		List<File> files = fc.showOpenMultipleDialog((Stage) chooseFileButton.getScene().getWindow());
-		if (files.size() == 0 || files != null) {
-			for (File f : files) {
-				analyzer = new Analyzer(codes);
-				fileName = f.getAbsolutePath();
-				if (enteredCodes.size() == 0) {
-					analyzer.processFile(fileName);
-				} else {
-					analyzer.processFile(fileName, enteredCodes);
+		try {
+			List<File> files = fc.showOpenMultipleDialog((Stage) chooseFileButton.getScene().getWindow());
+			if (files.size() != 0) {
+				for (File f : files) {
+					analyzer = new Analyzer(codes);
+					fileName = f.getAbsolutePath();
+					if (enteredCodes.size() == 0) {
+						analyzer.processFile(fileName);
+					} else {
+						analyzer.processFile(fileName, enteredCodes);
+					}
 				}
 			}
+		} catch (NullPointerException n) {
+			ta.setText(" No files selected");
 		}
+		
 	}
 
 	public void textButtonPressed(ActionEvent ev) {
