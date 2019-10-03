@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -71,9 +72,10 @@ public class Excel {
 	public void saveDoc(XSSFWorkbook book) {
 		try {
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File(File.separator +"Users" 
-            		+ File.separator + "brianmarx" + File.separator + "Desktop" + File.separator 
-            		+ "" + fileName + ".xlsx"));
+//            FileOutputStream out = new FileOutputStream(new File(File.separator +"Users" 
+//            		+ File.separator + "brianmarx" + File.separator + "Desktop" + File.separator 
+//            		+ "" + fileName + ".xlsx"));
+            FileOutputStream out = new FileOutputStream(FileUtils.getUserDirectory() + File.separator + "Desktop" + File.separator + fileName + ".xlsx");
             book.write(out);
             out.close();
             System.out.println("CHMData.xlsx written successfully on disk.");

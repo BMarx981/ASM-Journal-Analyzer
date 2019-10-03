@@ -31,6 +31,7 @@ public class Analyzer {
 			String line = buffer.readLine();
 			Paper paper = new Paper();
 			 
+			//While the buffer is able to read another line continue looping
 			while((line = buffer.readLine()) != null) {
 
 				//If the line is blank read next line
@@ -42,6 +43,7 @@ public class Analyzer {
 					paper = new Paper();
 					continue;
 				}
+				//Gets the file name from the JI code line
 				if (line.substring(0, 2).equals("JI")) {
 					if(line.substring(0, 2).contains("JI")) {
 						fileName = line.substring(2) + fileCount;
