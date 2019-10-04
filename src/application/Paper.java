@@ -22,6 +22,10 @@ public class Paper {
 		map.put(key, value);
 	}
 
+	public HashMap<String, String> getMap() {
+		return map;
+	}
+
 	public void insertID(ArrayList<String> strings) {
 		for (String s : strings) {
 			ids.add(s);

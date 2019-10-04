@@ -43,6 +43,7 @@ public class FirstSceneController implements Initializable {
 			add("DI");
 			add("OA");
 			add("ID");
+			add("DT");
 		}
 	};
 
