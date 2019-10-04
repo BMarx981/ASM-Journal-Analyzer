@@ -11,7 +11,7 @@ import java.util.List;
 public class Analyzer {
 	public static int fileCount = 1;
 	ArrayList<Paper> papers = new ArrayList<Paper>();
-	ArrayList<String> codes;
+	private ArrayList<String> codes;
 	HashMap<String, Integer> idCounts = new HashMap<String, Integer>();
 	String fileName = "";
 	LinkedList<String> q = new LinkedList<String>();
@@ -32,32 +32,20 @@ public class Analyzer {
 			FileReader fileReader = new FileReader(file);
 			buffer = new BufferedReader(fileReader);
 			String line = buffer.readLine();
-			Paper paper = new Paper();
 
 			// While the buffer is able to read another line continue looping
 			while ((line = buffer.readLine()) != null) {
-
-				// If the line is blank read next line
-				if (line.equals(""))
-					continue;
-
-				// If the record ends store the paper and create a new one
-				if (line.substring(0, 2).equals("ER")) {
-					papers.add(paper);
-					paper = new Paper();
+				// Check if the line is blank
+				if (line.contentEquals("") || line.substring(0, 2).equals("  ")) {
 					continue;
 				}
-				// Gets the file name from the JI code line
-				// This must be checked every line since JI may not be selected
-				if (line.substring(0, 2).equals("JI")) {
-					if (line.substring(0, 2).contains("JI")) {
-						fileName = line.substring(2) + fileCount;
-					}
-				}
-				// each code in the array codes gets sent to process codes
-				// where the code, paper and the line are placed in the Hashmap
+
+				// If the code is found in the begining of the line
+				// begin analyzing the lines and add the paper
+				// that returns to papers ArrayList
 				if (codes.contains(line.substring(0, 2))) {
-					processCodes(line, line.substring(0, 2), paper, buffer);
+					Paper paper = analyzeRecord(buffer, line);
+					papers.add(paper);
 				}
 			}
 			processAllIds();
@@ -70,21 +58,39 @@ public class Analyzer {
 		excel.createDocument(papers, codes, idCounts, fileName);
 	}
 
-	private void processCodes(String line, String code, Paper paper, BufferedReader buffer) throws IOException {
-		paper.addToMap(code, line.substring(2));
+	private Paper analyzeRecord(BufferedReader buffer, String line) throws IOException {
+		ArrayList<String> qList = new ArrayList<String>();
+		Paper paper = new Paper();
+		
+		qList.add(line);
+		while ((line = buffer.readLine()) != null 
+				&& !(line.substring(0, 2).equals("ER"))) {
+			qList.add(line);
+		}
+
+		for (int i = 0; i < qList.size(); i++) {
+			String s = qList.get(i).substring(3);
+			String code = qList.get(i).substring(0, 2);
+			if (code.equals("JI")) 
+				fileName = s;
+			
+			if (codes.contains(code)) {
+				while (i != qList.size() 
+						&& qList.get(i + 1).substring(0,2).equals("  ")) {
+					s = s + " " + qList.get(++i).substring(3);
+				}
+				processCodes(s, code, paper);
+			}
+		}
+		return paper;
+	}
+
+	private void processCodes(String line, String code, Paper paper) {
+		paper.addToMap(code, line);
 
 		// Place the ids in the paper's array
 		if (code.equals("ID"))
-			paper.processIds(line.substring(2));
-
-		String temp = line.substring(2);
-
-		// Check if the next line's code is empty. If so add it to temp and place
-		// That value in the paper's map.
-		if ((line = buffer.readLine()) != null && line.substring(0, 2).equals("  ")) {
-			temp = temp + line.substring(2);
-			paper.addToMap(code, temp);
-		}
+			paper.processIds(line);
 	}
 
 	// Processes the ids so that they can be displayed in

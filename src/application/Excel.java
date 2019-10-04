@@ -77,7 +77,7 @@ public class Excel {
 					FileUtils.getUserDirectory() + File.separator + "Desktop" + File.separator + fileName + ".xlsx");
 			book.write(out);
 			out.close();
-			System.out.println("CHMData.xlsx written successfully on disk.");
+			System.out.println(fileName + ".xlsx written successfully to disk.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
