@@ -51,6 +51,10 @@ public class Analyzer {
 			processAllIds();
 			buffer.close();
 			fileCount++;
+			if (fileCount != 1) {
+				int num = fileCount - 1;
+				fileName = fileName + num;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
