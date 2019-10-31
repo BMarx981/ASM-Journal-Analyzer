@@ -32,7 +32,7 @@ public class Excel {
 		fileName = name;
 
 		// Create a blank sheet
-		XSSFSheet sheet = workbook.createSheet("CHM Data");
+		XSSFSheet sheet = workbook.createSheet("Data");
 		int rowNum = 0;
 		Row row = sheet.createRow(rowNum++);
 		int cellNum = 0;

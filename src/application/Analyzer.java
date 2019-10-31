@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Analyzer {
@@ -14,7 +13,6 @@ public class Analyzer {
 	private ArrayList<String> codes;
 	HashMap<String, Integer> idCounts = new HashMap<String, Integer>();
 	String fileName = "";
-	LinkedList<String> q = new LinkedList<String>();
 
 	Analyzer(ArrayList<String> codes) {
 		this.codes = codes;
@@ -27,10 +25,7 @@ public class Analyzer {
 	}
 
 	public void processFile(String file) {
-		BufferedReader buffer = null;
-		try {
-			FileReader fileReader = new FileReader(file);
-			buffer = new BufferedReader(fileReader);
+		try (BufferedReader buffer = new BufferedReader(new FileReader(file))){
 			String line = buffer.readLine();
 
 			// While the buffer is able to read another line continue looping
@@ -50,7 +45,6 @@ public class Analyzer {
 			}
 			processAllIds();
 			buffer.close();
-			fileCount++;
 			if (fileCount != 1) {
 				int num = fileCount - 1;
 				fileName = fileName + num;
@@ -66,18 +60,24 @@ public class Analyzer {
 		ArrayList<String> qList = new ArrayList<String>();
 		Paper paper = new Paper();
 		
+		// Add each line to the list
 		qList.add(line);
 		while ((line = buffer.readLine()) != null 
 				&& !(line.substring(0, 2).equals("ER"))) {
 			qList.add(line);
 		}
 
+		// Use the list to find the data and code associated
+		// with the codes list.
+		// Set the Title of the file too
 		for (int i = 0; i < qList.size(); i++) {
 			String s = qList.get(i).substring(3);
 			String code = qList.get(i).substring(0, 2);
 			if (code.equals("JI")) 
 				fileName = s;
 			
+			// If the next line is a part of the current code
+			// concatenate the strings together
 			if (codes.contains(code)) {
 				while (i != qList.size() 
 						&& qList.get(i + 1).substring(0,2).equals("  ")) {
